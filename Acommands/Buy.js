@@ -15,7 +15,7 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
     let textfile = JSON.parse(fs.readFileSync("TextFolder/TextFile.json","utf8"));
     let prefix = Prefix.prefix;
 
-    messageArray = message.content.split(' ')
+    messageArray = message.content.split(' ');
     Cont = messageArray[1]
     try{
         Cont =parseInt(Cont)
