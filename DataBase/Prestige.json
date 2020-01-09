@@ -1,0 +1,46 @@
+{
+    "data":
+    {
+        "p1": "100",
+        "p2": "150",
+        "p3": "200",
+        "p4": "250",
+        "p5": "300"
+    },
+    "prestige0":
+    {
+        "paint": "19TOP1",
+        "dropluck": "0",
+        "cooldown": "0"
+    },
+    "prestige1":
+    {
+        "paint": "20TOPES002",
+        "dropluck": "5",
+        "cooldown": "1"
+    },
+    "prestige2":
+    {
+        "paint": "20TOPES007",
+        "dropluck": "10",
+        "cooldown": "0"
+    },
+    "prestige3":
+    {
+        "paint": "20TOPES006",
+        "dropluck": "20",
+        "cooldown": "1"
+    },
+    "prestige4":
+    {
+        "paint": "20TOPES005",
+        "dropluck": "30",
+        "cooldown": "0"
+    },
+    "prestige5":
+    {
+        "paint": "20TOPES008",
+        "dropluck": "40",
+        "cooldown": "1"
+    }
+}

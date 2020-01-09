@@ -1,0 +1,164 @@
+{
+  "Ranks" : 
+  {
+    "R1": 
+      {
+        "Name" : "Recruit",
+        "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/9/9c/Rank1.png/revision/latest?cb=20130704174456&path-prefix=ru"
+      }, 
+    "R2": 
+      {
+      "Name" : "Private",
+      "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/4/4c/Rank2.png/revision/latest?cb=20130704174456&path-prefix=ru"
+      }, 
+    "R3":
+      {
+      "Name" : "Gefreiter",
+      "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/5/5d/Rank3.png/revision/latest?cb=20130704174456&path-prefix=ru"
+      }, 
+    "R4":  
+      {
+      "Name" : "Corporal",
+      "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/c/c4/Rank4.png/revision/latest?cb=20130704174457&path-prefix=ru"
+      },
+    "R5":
+      {
+      "Name" : "Master Corporal",
+      "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/8/82/5.png/revision/latest?cb=20130704174457&path-prefix=ru"
+      },
+    "R6": 
+      {
+      "Name" : "Sergeant",
+      "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/f/f1/6.png/revision/latest?cb=20130704174458&path-prefix=ru"
+      },
+    "R7":
+      {
+    "Name" : "Staff Sergeant",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/9/9e/7.png/revision/latest?cb=20130704174458&path-prefix=ru"
+  }, 
+  "R8":
+  {
+    "Name" : "Master Sergeant",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/6/60/8.png/revision/latest?cb=20130704174458&path-prefix=ru"
+  }, 
+  "R9":
+  {
+    "Name" : "First Sergeant",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/7/7a/9.png/revision/latest?cb=20130704174459&path-prefix=ru"
+  }, 
+  "R10":
+  {
+    "Name" : "Sergeant-Major",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/5/58/10.png/revision/latest?cb=20130704174459&path-prefix=ru"
+  },
+  "R11":
+  {
+    "Name" : "Warrant Officer 1",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/5/59/11.png/revision/latest?cb=20130704174459&path-prefix=ru"
+  }, 
+  "R12":
+  {
+    "Name" : "Warrant Officer 2",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/9/9e/12.png/revision/latest?cb=20130704174500&path-prefix=ru"
+  }, 
+  "R13":
+  {
+    "Name" : "Warrant Officer 3",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/c/c0/13.png/revision/latest?cb=20130704174500&path-prefix=ru"
+  },
+  "R14":
+  {
+    "Name" : "Warrant Officer 4",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/7/7b/14.png/revision/latest?cb=20130704174500&path-prefix=ru"
+  }, 
+  "R15":
+  {
+    "Name" : "Warrant Officer 5",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/d/d6/15.png/revision/latest?cb=20130704174500&path-prefix=ru"
+  }, 
+  "R16":
+  {
+    "Name" : "Third Lieutenant",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/1/1e/16.png/revision/latest?cb=20130704174501&path-prefix=ru"
+  }, 
+  "R17":
+  {
+    "Name" : "Second Lieutenant",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/c/c9/17.png/revision/latest?cb=20130704174501&path-prefix=ru"
+  },
+  "R18":
+  {
+    "Name" : "First Lieutenant",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/8/88/18.png/revision/latest?cb=20130704174501&path-prefix=ru"
+  }, 
+  "R19":
+  {
+    "Name" : "Captain",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/b/ba/19.png/revision/latest?cb=20130704174502&path-prefix=ru"
+  }, 
+  "R20":
+  {
+    "Name" : "Major",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/0/07/20.png/revision/latest?cb=20130704174502&path-prefix=ru"
+  }, 
+  "R21":
+  {
+    "Name" : "Lieutenant Colonel",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/7/71/21.png/revision/latest?cb=20130704174632&path-prefix=ru"
+  }, 
+  "R22":
+  {
+    "Name" : "Colonel",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/7/75/22.png/revision/latest?cb=20130704174632&path-prefix=ru"
+  }, 
+  "R23":
+  {
+    "Name" : "Brigadier",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/7/7a/23.png/revision/latest?cb=20130704174633&path-prefix=ru"
+  }, 
+  "R24":
+  {
+    "Name" : "Major General",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/2/24/24.png/revision/latest?cb=20130704174633&path-prefix=ru"
+  }, 
+  "R25":
+  {
+    "Name" : "Lieutenant General",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/a/a9/25.png/revision/latest?cb=20130704174633&path-prefix=ru"
+  }, 
+  "R26":
+  {
+    "Name" : "General",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/2/25/26.png/revision/latest?cb=20130704174634&path-prefix=ru"
+  }, 
+  "R27":
+  {
+    "Name" : "Marshal",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/f/ff/27.png/revision/latest?cb=20130704174634&path-prefix=ru"
+  }, 
+  "R28":
+  {
+    "Name" : "Field Marshal",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/b/b9/28.png/revision/latest?cb=20130704174634&path-prefix=ru"
+  },
+  "R29":
+  {
+    "Name" : "Commander",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/5/50/29.png/revision/latest?cb=20130704174634&path-prefix=ru"
+  },
+  "R30":
+  {
+    "Name" : "Generalissimo",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/1/19/30.png/revision/latest?cb=20130704174635&path-prefix=ru"
+  }, 
+  "R31":
+  {
+    "Name" : "Legend",
+    "URL" : "https://vignette.wikia.nocookie.net/tanki-online/images/5/59/%D0%9B%D0%B5%D0%B3%D0%B5%D0%BD%D0%B4%D0%B0_%D0%98%D0%BA%D0%BE%D0%BD%D0%BA%D0%B0.png/revision/latest?cb=20161111223756&path-prefix=ru"
+  } 
+},
+"Logo":{
+    "Name":"Tankionline",
+    "URL":"https://tankionline.com/en/wp-content/themes/newest/images/logo.png"
+}
+}

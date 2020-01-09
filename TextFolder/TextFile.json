@@ -1,0 +1,44 @@
+{
+    "open":
+    {
+        "created":"✔️ **Your Profile has been created** ✔️",
+
+        "denied":"❌ **Your Profile already exists** ❌"
+    },
+    "start":
+    {
+        "created":"✔️ **Your Profile has been created** ✔️",
+
+        "denied":"❌ **Your Profile already exists** ❌"
+    },
+    "Info":
+    {
+        "profile1" : "use t$start to create GameProfile"
+    },
+
+    "Cooldown":
+    {
+    
+        "msg1":"Patience, little halfling! Your time will come!!",
+    
+        "msg2":"Primitive being! Stand by !!",
+        
+        "msg3":"Take a breather !!",
+    
+        "msg4":"Beep beep boop"
+    },
+    "QPaintWiki":
+    {
+        "Qpage":"**Paint Menu**\n```CSS\n{Please: 'type an alphabet given below'}\n\n<[A]>    <[B]>    <[C]>    <[D]>    <[E]>\n<[F]>    <[G]>    <[H]>    <[I]>    <[J]>\n<[K]>    <[L]>    <[M]>    <[N]>    <[O]>\n<[P]>    <[Q]>    <[R]>    <[S]>    <[T]>\n<[U]>    <[V]>    <[W]>    <[X]>    <[Y]>\n                  <[Z]>\n\n#Type [exit] to close the menu```",
+        "InvalidEntry":":pencil:  | **Incorrect Input Exiting Menu**",
+        "NoEntry":":hourglass: | **Times up , Exiting the Menu**",
+        "exit":":negative_squared_cross_mark: | Exiting the Menu "
+    },
+    "QInventory":
+    {
+        "Qpage":"**Paint Menu**\n```less\n@Please \"select a category number\";\n\n[1] Common\n[2] Uncommon\n[3] Rare\n[4] Epic\n[5] Legendary\n[6] Exotic\n[7] Prestige\n\n#Type [exit] to close the menu```",
+        "InvalidEntry":":pencil:  | **Incorrect Input Exiting Menu**",
+        "NoEntry":":hourglass: | **Times up , Exiting the Menu**",
+        "exit":":negative_squared_cross_mark: | Exiting the Menu "
+    }
+}
