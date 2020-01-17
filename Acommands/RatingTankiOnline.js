@@ -8,10 +8,11 @@ const db = require("quick.db");
 const fs = require("fs");
 
 
-module.exports.run = async (bot,message,args) => {
+module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle,DBguildSetting,DBgift,DBserver) => {
 
     let textfile = JSON.parse(fs.readFileSync("TextFolder/TextFile.json","utf8"));
     let ranks = JSON.parse(fs.readFileSync("DataBase/Rating.json","utf8"));
+    prefix = Prefix.prefix
 
     let Suser = message.author
     let spaminterval =3
@@ -29,14 +30,15 @@ module.exports.run = async (bot,message,args) => {
     let T = ranks["Logo"]
 
     user = args[0]
-    if(!user) return message.channel.send(" :exclamation: |  **Make sure you don't leave more than one space after xrating ** \n:exclamation: |  ***Usage :*** `$rating nickname`")
+    if(!user) return message.channel.send(`:information_source: | **INFORMATION**\n**Make sure you don't leave more than one space after ${prefix}rating ** \n:ballot_box_with_check: | ***Usage :*** \`${prefix}rating <nickname>\` \n:white_check_mark: |  ***Example :*** \`${prefix}rating MiMs\``)
 
-       try{
+      // try{
             LINK = `https://ratings.tankionline.com/api/eu/profile/?user=${user}&lang=en`
             UserLINK = `https://ratings.tankionline.com/en/user/${user}`
 
             let {body} = await superagent
             .get(LINK)
+            try{
 
             NICKNAME = body.response.name
             Rank = parseInt(body.response.rank)
@@ -89,28 +91,26 @@ module.exports.run = async (bot,message,args) => {
             .setColor('#42f598')
             .setThumbnail(URL)
             .addField('Stats :',`
-    **Rank : ** *${RankName}*
-    **Experience :** *${EXP}*
-    **Efficiency :** *${EFF}*
-    **Gear Score :** *${body.response.gearScore}*
-    **Time Played : ** *${TimePlayed} Hrs*
-    **Golds Caught : ** *${GOLDS}*
-    **Kills :** *${Kills}*
-    **Deaths :** *${Deaths}*
-    **K/D :** *${KD}*`)
+**Rank : ** *${RankName}*
+**Experience :** *${EXP}*
+**Efficiency :** *${EFF}*
+**Gear Score :** *${body.response.gearScore}*
+**Time Played : ** *${TimePlayed} Hrs*
+**Golds Caught : ** *${GOLDS}*
+**Kills :** *${Kills}*
+**Deaths :** *${Deaths}*
+**K/D :** *${KD}*`)
             .setURL(UserLINK);
     
             message.channel.send(embed)
-
        }
         catch(e)
-        {
-            message.channel.send(' :exclamation: |  **Nickname doesnt exist , Please Check the entered nickname**')
-        }
+       {
+           message.channel.send(' :exclamation: |  **Nickname doesnt exist , Please Check the entered nickname**')
+       }
 
 }
 module.exports.help = {
     name : "rating",
-    aliases: "ratings",
-    desc:"Shows Tanki Online user rating "
+    aliases:"ratings"
 }

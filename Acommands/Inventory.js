@@ -6,6 +6,8 @@ const spams = require("../spams.js");
 const db = require("quick.db");
 const fs = require("fs");
 
+
+
 module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle,DBguildSetting,DBgift,DBserver) => {
 
     //if(message.author.id != '292675388180791297') return
@@ -16,49 +18,49 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
     let player = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
     if(player)
     {
-         ProfileID = player.id
-         ProfileUserName = player.user.username
+         InventoryID = player.id
+         InventoryUserName = player.user.username
     }
     else{
-        ProfileID = message.author.id
-        ProfileUserName = message.author.username
+        InventoryID = message.author.id
+        InventoryUserName = message.author.username
     }
 
-//     ProfileID = `452825265840848906`
+//     InventoryID = `452825265840848906`
 //     ProfileName = `Homi`
     let Suser = message.author
     let spaminterval =10
-        if (Suser.ProfileSpam) {
-            if (new Date().getTime() - Suser.ProfileSpam < spaminterval*1000) {
-                spams(message,Suser.ProfileSpam,spaminterval)
+        if (Suser.InventorySpam) {
+            if (new Date().getTime() - Suser.InventorySpam < spaminterval*1000) {
+                spams(message,Suser.InventorySpam,spaminterval)
                 return;
             }
-            else { Suser.ProfileSpam = new Date().getTime()}
+            else { Suser.InventorySpam = new Date().getTime()}
         }
-        else { Suser.ProfileSpam = new Date().getTime()}
+        else { Suser.InventorySpam = new Date().getTime()}
 
-    let profile = await DBprofile.fetch(`TC_${ProfileID}`,{target : '.username'}) 
+    let profile = await DBprofile.fetch(`TC_${InventoryID}`,{target : '.username'}) 
     if(player)
     {
-            if(!profile) return message.channel.send(`**:file_folder: | ${ProfileUserName} does not have a Profile yet**`)
+            if(!profile) return message.channel.send(`**:file_folder: | ${InventoryUserName} does not have a Profile yet**`)
     }
     else{
             if(!profile) return message.channel.send(`**Use \`${prefix}start\` to make a New Profile**`)
     }
 
-    console.log(`Request for ${ProfileUserName} Profile`)
+    console.log(`Request for ${InventoryUserName} Inventory`)
 
-        Level = await DBlevel.fetch(`TC_${ProfileID}`,{target:`.level`})
+        Level = await DBlevel.fetch(`TC_${InventoryID}`,{target:`.level`})
 
         CheckNull = async(Data)=>{
                 if(Data===null || Data===undefined) return 0
                 else return parseInt(Object.keys(Data).length)
         }
 
-        data =  await DBprofile.fetch(`TC_${ProfileID}`)
+        data =  await DBprofile.fetch(`TC_${InventoryID}`)
         if(!data.username)
         {
-                return message.channel.send(`**:file_folder: | ${ProfileUserName} does not have a Profile yet**`)
+                return message.channel.send(`**:file_folder: | ${InventoryUserName} does not have a Profile yet**`)
         }
         Ndata = Object.keys(data)
 
@@ -163,7 +165,7 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
         Paints = numberFormatter("#,##0.##",Paints)
         Tankicoins = numberFormatter("#,##0.##",Tankicoins)
 
-        dataGift = await DBgift.fetch(`TC_${ProfileID}`,{target:`.Gifts`});
+        dataGift = await DBgift.fetch(`TC_${InventoryID}`,{target:`.Gifts`});
         GiftArray = []
         GiftArrayEmoji = []
         dataGiftObject = Object.keys(dataGift)
@@ -198,33 +200,43 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
                 UserIcon = message.member.user.avatarURL
         }
         let Embed = new Discord.RichEmbed()
-        .setAuthor(ProfileUserName+' Profile',UserIcon)
+        .setAuthor(InventoryUserName+' Inventory',UserIcon)
         .setThumbnail(UserIcon)
-        .setColor("#00FFDA")    
-        .addField('Ratings',`
-**Level** : *${Level}*
-**Score** : *${Scores}*
-**Prestige** : *${Prestige}*
-        `,true) 
-        .addField(`Gifts Recieved`,`${GiftMessage}`,true)  
+        .setColor("#2C00FF")
         .addField('Inventory',`
+**${TANE} Tankicoins** : *${Tankicoins}*
 **${CRYE} Crystals** : *${Crystals}*
 **${SUPE} Supplies** : *${Supplies}*
 **${PANE} Paints** : *${Paints}*
 **${SKNE} Skins** : *${Skins}*
 **${CONE} Containers** : *${Containers}*
 `)
-//**${TANE} Tankicoins** : *${Tankicoins}*
 // **Achievements** : *Coming soon !*
 // **Collections** : *Coming soon !*
-// **Rewards** : *Coming soon !*
-        .setFooter(`${prefix}inv to see your inventory`);
+// **Rewards** : *Coming soon !* 
+        .addField('Paints',`
+**${UE} Uncommon** : *${U} of ${PaintCount2.length - 10}*
+**${RE} Rare** : *${R} of ${PaintCount3.length - 10}*
+**${EE} Epic** : *${E} of ${PaintCount4.length - 10}*
+**${LE} Legendary** : *${L} of ${PaintCount5.length - 5}*
+**${PE} Prestige** : *${P} of ${PaintCount7.length}*
+`,true)
+//**${AE} Exotic** : *${A} of ${PaintCount6.length - 42}*
+.addField('Skins',`
+**${XTE} XT** : *${XT} of 20*
+**${LCE} Legacy** : *${LC} of 6*
+**${DCE} Demonic** : *${DC} of 1*
+**${PRE} Prime** : *${PR} of 8*
+**${UCE} Ultra** : *${UC} of 3*
+`,true)
+        //.setFooter(`Name : Japan <---> ID : 19TOP350`);
 
         message.channel.send(Embed);
+    
 
 }
 module.exports.help = {
-        name : "profile",
-        desc : "Check your Profile",
-        aliases: "p"
+        name : "inventory",
+        desc : "Check your Inventory",
+        aliases: "inv"
 }

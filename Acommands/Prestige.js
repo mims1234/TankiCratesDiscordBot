@@ -7,7 +7,7 @@ const spams = require("../spams.js");
 const db = require("quick.db");
 const fs = require("fs");
 
-module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle) => {
+module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle,DBguildSetting,DBgift,DBserver) => {
 
     //if(message.author.id != '292675388180791297') return
     let prestigeData = JSON.parse(fs.readFileSync("DataBase/Prestige.json","utf8"));
@@ -35,13 +35,13 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
     }
     else { Suser.PrestigeKey = new Date().getTime()}
     
-    UserID = message.author.id
-    UserName = message.author.username
-    UserNameIcon = message.member.user.avatarURL
+    PrestigeID = message.author.id
+    PrestigeUserName = message.author.username
+    PrestigeIcon = message.member.user.avatarURL
 
-    PrestigeLevel = await DBprofile.fetch(`TC_${UserID}`,{target : `.prestige`})
-    PrestigeTotalPaints = await DBprofile.fetch(`TC_${UserID}`,{target : `.paints`})
-    PrestigeCheck = await DBidle.fetch(`TC_${UserID}`,{target : `.Prestige`})
+    PrestigeLevel = await DBprofile.fetch(`TC_${PrestigeID}`,{target : `.prestige`})
+    PrestigeTotalPaints = await DBprofile.fetch(`TC_${PrestigeID}`,{target : `.paints`})
+    PrestigeCheck = await DBidle.fetch(`TC_${PrestigeID}`,{target : `.Prestige`})
 
     PrestigeCheckFucntion = async(PrestigeLevel,TotalPaints) => {
             if(PrestigeLevel === 0 && TotalPaints >= prestigeData[`data`].p1) return `prestige1`
@@ -108,45 +108,44 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
             RewardCooldown = prestigeData[`${P}`].cooldown
             PrestigeLevel = parseInt(P.slice(8))
     
-            await DBprofile.set(`TC_${UserID}`,PrestigeLevel,{target : `.prestige`})
-            await DBprofile.set(`TC_${UserID}`,true,{target:`.Paints.P.${PaintID}`})
-            await DBprofile.add(`TC_${UserID}`,1,{target:`.totalP`})
-            await DBstats.add(`TC_${UserID}`,1,{target:`.totalP`})
+            await DBprofile.set(`TC_${PrestigeID}`,PrestigeLevel,{target : `.prestige`})
+            await DBprofile.set(`TC_${PrestigeID}`,true,{target:`.Paints.P.${PaintID}`})
+            await DBprofile.add(`TC_${PrestigeID}`,1,{target:`.totalP`})
     
-            await DBprofile.set(`TC_${UserID}`,null,{target:`.Paints.C`})
-            await DBprofile.set(`TC_${UserID}`,null,{target:`.Paints.U`})
-            await DBprofile.set(`TC_${UserID}`,null,{target:`.Paints.R`})
-            await DBprofile.set(`TC_${UserID}`,null,{target:`.Paints.E`})
-            await DBprofile.set(`TC_${UserID}`,null,{target:`.Paints.L`})
-            await DBprofile.set(`TC_${UserID}`,null,{target:`.Paints.A`})
+            await DBprofile.set(`TC_${PrestigeID}`,null,{target:`.Paints.C`})
+            await DBprofile.set(`TC_${PrestigeID}`,null,{target:`.Paints.U`})
+            await DBprofile.set(`TC_${PrestigeID}`,null,{target:`.Paints.R`})
+            await DBprofile.set(`TC_${PrestigeID}`,null,{target:`.Paints.E`})
+            await DBprofile.set(`TC_${PrestigeID}`,null,{target:`.Paints.L`})
+            await DBprofile.set(`TC_${PrestigeID}`,null,{target:`.Paints.A`})
 
-            await DBprofile.set(`TC_${UserID}`,null,{target:`.Skins.XT`})
-            await DBprofile.set(`TC_${UserID}`,null,{target:`.Skins.LC`})
-            await DBprofile.set(`TC_${UserID}`,null,{target:`.Skins.DC`})
-            await DBprofile.set(`TC_${UserID}`,null,{target:`.Skins.PR`})
-            await DBprofile.set(`TC_${UserID}`,null,{target:`.Skins.UC`})
+            await DBprofile.set(`TC_${PrestigeID}`,null,{target:`.Skins.XT`})
+            await DBprofile.set(`TC_${PrestigeID}`,null,{target:`.Skins.LC`})
+            await DBprofile.set(`TC_${PrestigeID}`,null,{target:`.Skins.DC`})
+            await DBprofile.set(`TC_${PrestigeID}`,null,{target:`.Skins.PR`})
+            await DBprofile.set(`TC_${PrestigeID}`,null,{target:`.Skins.UC`})
     
-            await DBprofile.set(`TC_${UserID}`,0,{target:`.totalC`})
-            await DBprofile.set(`TC_${UserID}`,0,{target:`.totalU`})
-            await DBprofile.set(`TC_${UserID}`,0,{target:`.totalR`})
-            await DBprofile.set(`TC_${UserID}`,0,{target:`.totalE`})
-            await DBprofile.set(`TC_${UserID}`,0,{target:`.totalL`})
-            await DBprofile.set(`TC_${UserID}`,0,{target:`.totalA`})
+            await DBprofile.set(`TC_${PrestigeID}`,0,{target:`.totalC`})
+            await DBprofile.set(`TC_${PrestigeID}`,0,{target:`.totalU`})
+            await DBprofile.set(`TC_${PrestigeID}`,0,{target:`.totalR`})
+            await DBprofile.set(`TC_${PrestigeID}`,0,{target:`.totalE`})
+            await DBprofile.set(`TC_${PrestigeID}`,0,{target:`.totalL`})
+            await DBprofile.set(`TC_${PrestigeID}`,0,{target:`.totalA`})
 
-            await DBprofile.set(`TC_${UserID}`,0,{target:`.totalXT`})
-            await DBprofile.set(`TC_${UserID}`,0,{target:`.totalLC`})
-            await DBprofile.set(`TC_${UserID}`,0,{target:`.totalDC`})
-            await DBprofile.set(`TC_${UserID}`,0,{target:`.totalPR`})
-            await DBprofile.set(`TC_${UserID}`,0,{target:`.totalUC`})
+            await DBprofile.set(`TC_${PrestigeID}`,0,{target:`.totalXT`})
+            await DBprofile.set(`TC_${PrestigeID}`,0,{target:`.totalLC`})
+            await DBprofile.set(`TC_${PrestigeID}`,0,{target:`.totalDC`})
+            await DBprofile.set(`TC_${PrestigeID}`,0,{target:`.totalPR`})
+            await DBprofile.set(`TC_${PrestigeID}`,0,{target:`.totalUC`})
     
-            await DBidle.set(`TC_${UserID}`,false,{target : `.Prestige`})
+            await DBidle.set(`TC_${PrestigeID}`,false,{target : `.Prestige`})
     
-            data = await DBprofile.fetch(`TC_${UserID}`)
+            data = await DBprofile.fetch(`TC_${PrestigeID}`)
             
-            NewPaintsTotal = (data.totalP)
+            NewPaintsTotal = (data.totalP + data.totalFL + data.totalHO + data.totalS)
             
-            await DBprofile.set(`TC_${UserID}`,NewPaintsTotal,{target:`.paints`})
-            await DBprofile.set(`TC_${UserID}`,0,{target:`.skins`})
+            await DBprofile.set(`TC_${PrestigeID}`,NewPaintsTotal,{target:`.paints`})
+            await DBprofile.set(`TC_${PrestigeID}`,0,{target:`.skins`})
 
             if(P === `prestige1`) textReward = `\n[3] Cooldown Decreased by -1 Second`
             if(P === `prestige2`) textReward = ` `
@@ -155,7 +154,7 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
             if(P === `prestige5`) textReward = `\n[3] Cooldown Decreased by -1 Second`
     
             let PRSTIGEEMBED = new Discord.RichEmbed()
-            .setAuthor(`| ${UserName} Prestige Leveled-UP !!`,UserIcon)
+            .setAuthor(`| ${PrestigeUserName} Prestige Leveled-UP !!`,PrestigeIcon)
             .setColor(`#ffd2a6`)
             .addField(`- - - - - - - - - - - - - - - - - - - - - - - - - - -\n:tada: | Prestige Level ${PrestigeLevel} recived Rewards :`,`[1] ${RewardPaintName} Paint\n[2] Drop Luck Increased +${RewardDropLuck}%${textReward}\n\n`)
             .addField(`- - - - - - - - - - - - - - - - - - - - - - - - - - -\nCongratulations you have reached Prestige Level ${PrestigeLevel}`,`> *${RewardPaintName} Paint Preview* :`)

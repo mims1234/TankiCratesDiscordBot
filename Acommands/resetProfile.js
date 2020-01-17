@@ -7,7 +7,7 @@ const spams = require("../spams.js");
 const db = require("quick.db");
 const fs = require("fs");
 
-module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle) => {
+module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle,DBguildSetting,DBgift,DBserver) => {
 
     //if(message.author.id != '292675388180791297') return
     let textfile = JSON.parse(fs.readFileSync("TextFolder/TextFile.json","utf8"));
@@ -56,7 +56,8 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
     {
         await DBprofile.delete(`TC_${UserID}`)
         await DBidle.delete(`TC_${UserID}`)
-        await DBachievements.delete(`TC_${UserID}`)
+        await DBgift.delete(`TC_${UserID}`)
+        await DBlevel.delete(`TC_${UserID}`)
         message.reply(`\n:no_mouth: | ${UserName} Profile in Tankicrates BOT has been reseted as requested!!`)
     }
     else return message.channel.send(textfile['QInventory'].InvalidEntry)

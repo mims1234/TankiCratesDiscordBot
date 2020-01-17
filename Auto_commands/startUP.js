@@ -1,20 +1,17 @@
-const numberFormatter = require("number-formatter");
-const matchSorter = require("match-sorter")
-const Prefix = require("../prefix.json");
-const Discord = require("discord.js");
-const spams = require("../spams.js");
-const db = require("quick.db");
-const fs = require("fs");
 
+module.exports= async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle,DBgift,NewProfileID,NewProfileName) => {
 
-module.exports= async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle) => {
+    if(NewProfileID){
+        StartUPuserName = NewProfileName
+        StartUPid = NewProfileID
+    }
+    else
+    {
+        StartUPuserName = message.author.username
+        StartUPid = message.author.id
+    }
 
-    //if(message.author.id != '292675388180791297') return
-
-    StartUPuserName = message.author.username
-    StartUPid = message.author.id
-
-    if(!user)
+    //if(!user)
     { 
         let NewProfile = {
         username: `${StartUPuserName}`,
@@ -38,7 +35,9 @@ module.exports= async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel
         totalL:0,
         totalA:0,
         totalP:0,
-        totalAchievements:0
+        totalAchievements:0,
+        Paints:{},
+        Skins:{}
         }
 
         let NewRole = {

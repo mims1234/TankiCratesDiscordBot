@@ -7,16 +7,19 @@ const db = require("quick.db");
 const fs = require("fs");
 const moment = require("moment")
 
-module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle) => {
+module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle,DBguildSetting,DBgift,DBserver) => {
 
     if(message.author.id != '292675388180791297') return
-
-    let container = JSON.parse(fs.readFileSync("Database/DB_ContainerDrops.json","utf8"));
-    ID = '264945140525694977'
-//
-    await DBprofile.set(`TC_${ID}`,1,{target:`.prestige`})
-    await DBprofile.set(`TC_${ID}`,5000,{target:`.score`})
+    A = await DBgift.startsWith(`TC`,{target:`.data`}).then(resp=>{
+        for(a in resp)
+        {
+            console.log(resp[a].data.username)
+        }
+    })
+  
+    message.channel.send('Gift DB Check Complete !!')
+    
 }
 module.exports.help = {
-    name : "resetPrestige"
+    name : "123DBcheck"
 }

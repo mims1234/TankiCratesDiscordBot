@@ -3,11 +3,11 @@ const matchSorter = require("match-sorter")
 const Prefix = require("../prefix.json");
 const Discord = require("discord.js");
 const spams = require("../spams.js");
+const BigSpams = require("../BigSpam.js");
 const pre = require("../Auto_commands/prestigePOP.js");
-const db = require("quick.db");
 const fs = require("fs");
 
-module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle) => {
+module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle,DBguildSetting,DBgift,DBserver) => {
 
     //if(message.author.id != '292675388180791297') return
 
@@ -16,11 +16,12 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
 
     let OpenUserID = message.author.id
     let OpenUserName = message.author.username
+    let OpenGuildID = message.guild.id
 
-    //JSON Reasources
-    let prestigeData = JSON.parse(fs.readFileSync("DataBase/Prestige.json","utf8"));
-    let container = JSON.parse(fs.readFileSync("DataBase/DB_ContainerDrops.json","utf8"));
-    let paints = JSON.parse(fs.readFileSync("DataBase/DB_PaintID.json","utf8"));
+    //Prestige %
+    let PrestigeLevel = await DBprofile.fetch(`TC_${OpenUserID}`,{target : `.prestige`})
+    let PrestigeTotalPaints = await DBprofile.fetch(`TC_${OpenUserID}`,{target : `.paints`})
+    let PrestigeCheck = await DBidle.fetch(`TC_${OpenUserID}`,{target : `.Prestige`})
 
     CoolDown = async(PrestigeLevel) => {
         if(PrestigeLevel < 1) return 6
@@ -32,23 +33,45 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
         return 10
     }
 
+    if(message.author.id != '292675388180791297')   spaminterval = await CoolDown(PrestigeLevel)
+    else spaminterval = 1//await CoolDown(PrestigeLevel)
+
+    let Suser = message.author
+    //Big Cooldown
+    if(Suser.LockCheck === true){BigSpam = 1800;BigSpamCheck = 180;} 
+    else {BigSpam = 60;BigSpamCheck=0}
+    let BigSpamCount = 40
+    if (Suser.BigOpenCrate) {
+        if(new Date().getTime() - Suser.BigOpenCrateSpamON < BigSpam*1000)
+        {
+            if(Suser.LockCheck===true) Suser.LockCheck = await BigSpams(bot,message,Suser.BigOpenCrateSpamON,BigSpam,1)
+            else BigSpams(bot,message,Suser.BigOpenCrateSpamON,BigSpam,3)
+            return;
+        }
+        else if (new Date().getTime() - Suser.BigOpenCrate < BigSpamCheck*1000) {
+            if(Suser.OpenContainerCount>=BigSpamCount) {Suser.BigOpenCrateSpamON=new Date().getTime();}
+        }
+        else { Suser.BigOpenCrate = new Date().getTime();Suser.BigOpenCrateSpamON=null;Suser.OpenContainerCount=0;Suser.LockCheck=true}
+    }
+    else { Suser.BigOpenCrate = new Date().getTime();Suser.OpenContainerCount=0;Suser.LockCheck=true}
+
+    //Normal Cooldown
+    if (Suser.OpenCrate) {
+        if (new Date().getTime() - Suser.OpenCrate < spaminterval*1000) {
+            spams(message,Suser.OpenCrate,spaminterval)
+            return;
+        }
+        else { Suser.OpenCrate = new Date().getTime()}
+    }
+    else { Suser.OpenCrate = new Date().getTime()}
+
+    //JSON Reasources
+    let prestigeData = JSON.parse(fs.readFileSync("DataBase/Prestige.json","utf8"));
+    let container = JSON.parse(fs.readFileSync("DataBase/DB_ContainerDrops.json","utf8"));
+    let paints = JSON.parse(fs.readFileSync("DataBase/DB_PaintID.json","utf8"));
+
     let profile = await DBprofile.fetch(`TC_${OpenUserID}`,{target : '.username'}) 
     if(!profile) return console.log('Error Profile Not created | '+OpenUserName)
-
-    //Value Initialization
-
-    //Prestige %
-    let PrestigeLevel = await DBprofile.fetch(`TC_${OpenUserID}`,{target : `.prestige`})
-    let PrestigeTotalPaints = await DBprofile.fetch(`TC_${OpenUserID}`,{target : `.paints`})
-    let PrestigeCheck = await DBidle.fetch(`TC_${OpenUserID}`,{target : `.Prestige`})
-
-    if(message.author.id != '292675388180791297')
-    {
-        spaminterval = await CoolDown(PrestigeLevel)
-    }
-    else{
-        spaminterval = await CoolDown(PrestigeLevel)
-    }
 
     PrestigeCheckFucntion = async(PrestigeLevel,TotalPaints) => {
             if(PrestigeLevel === 0 && TotalPaints >= prestigeData[`data`].p1) return `prestige1`
@@ -59,16 +82,6 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
             return null
     }
 
-    let Suser = message.author
-    if (Suser.OpenCrate) {
-        if (new Date().getTime() - Suser.OpenCrate < spaminterval*1000) {
-            spams(message,Suser.OpenCrate,spaminterval)
-            return;
-        }
-        else { Suser.OpenCrate = new Date().getTime()}
-    }
-    else { Suser.OpenCrate = new Date().getTime()}
-
     if(PrestigeCheck != true)
     {
         let P = await PrestigeCheckFucntion(PrestigeLevel,PrestigeTotalPaints)
@@ -76,7 +89,7 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
     }
 
     // C U R E L A
-    PD = [1000,700,400,200,30,10,0]
+    PD = [1000,600,350,200,50,10,0]
 
     PD[0] = Prestige(PrestigeLevel,PD[0])
     PD[1] = Prestige(PrestigeLevel,PD[1])
@@ -143,7 +156,7 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
 
     function Crates(R1,C1,R2,C2,R3,C3,R4,C4,R5,C5,R6,C6,MIN)
     {
-        CODE = Math.floor(Math.random() * 800)+1
+        CODE = Math.floor(Math.random() * 1000)+1
         //console.log(`PIN = `+CODE)
         if(CODE<=R1 && CODE>R2) return C1
         if(CODE<=R2 && CODE>R3) return C2
@@ -220,6 +233,16 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
         if(PaintType === 'A') return 5
     }
 
+    function RandomScore(pin)
+    {
+        if(pin === 'C') return Math.floor(Math.random() * 2) + 1
+        if(pin === 'U') return Math.floor(Math.random() * 2) + 3
+        if(pin === 'R') return Math.floor(Math.random() * 2) + 5
+        if(pin === 'E') return Math.floor(Math.random() * 2) + 7
+        if(pin === 'L') return Math.floor(Math.random() * 2) + 9
+        if(pin === 'A') return Math.floor(Math.random() * 2) + 11
+    }
+
     function emoji(id) {
         return bot.emojis.get(id).toString();
     }
@@ -256,9 +279,11 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
         bot.UserData = async (PaintID, PaintName, PaintType, HexID, OpenUserID, val, pin) => {
 
             data =  await DBprofile.fetch(`TC_${OpenUserID}`)
-            score = Math.round(Math.random() * 10) + 1
+            score = RandomScore(pin)
+            OpenGiftCheckAction=true
+            OpenGiftCheck = await DBgift.fetch(`TC_${OpenUserID}`,{target:`.giftReadStatus`})
+            if(OpenGiftCheck===false) OpenGiftCheckAction = false
             UserContainers = data.containers
-            //UserContainers = 1;
             if(UserContainers>0)
             {
                 if(PaintID.startsWith('CRY',2))
@@ -286,18 +311,17 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
                 if(PaintID.startsWith('TOP',2))
                 {
                     await DBprofile.set(`TC_${OpenUserID}`,true,{target:`.Paints.${pin}.${PaintID}`})
-
                     await DBprofile.add(`TC_${OpenUserID}`,1,{target: `.total${pin}`})
-
                     await DBprofile.add(`TC_${OpenUserID}`,1,{target: `.paints`})
 
                     text1 = `Congratulations! You won ${PaintName} Paint`
-                    AMOUNT = 0
 
                     PF = PaintLength(pin)
                     var PaintCountF = Object.keys(container[pin])
-
-                    AMOUNT = await DBprofile.fetch(`TC_${OpenUserID}`,{target:`.total${pin}`})
+                  
+                    AMOUNTObject = await DBprofile.fetch(`TC_${OpenUserID}`,{target:`.Paints.${pin}`})
+                    AMOUNT = Object.keys(AMOUNTObject).length
+                  
                     text3 = `**You now have ${AMOUNT} out of ${PaintCountF.length - PF} ${PaintType} Paints**`
                 }
 
@@ -309,20 +333,22 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
                     SE = SkinEmoji(Spin)
 
                     await DBprofile.set(`TC_${OpenUserID}`,true,{target:`.Skins.${Spin}.${PaintID}`})
-
                     await DBprofile.add(`TC_${OpenUserID}`,1,{target: `.total${Spin}`})
-
                     await DBprofile.add(`TC_${OpenUserID}`,1,{target: `.skins`})
 
                     text1 = `Congratulations! You won ${PaintName} Skin`
-                    AMOUNT = 0
 
-                    AMOUNT = await DBprofile.fetch(`TC_${OpenUserID}`,{target:`.total${Spin}`})
+                    AMOUNTObject = await DBprofile.fetch(`TC_${OpenUserID}`,{target:`.Skins.${Spin}`})
+                    AMOUNT = Object.keys(AMOUNTObject).length
+                  
                     text3 = `**You now have ${AMOUNT} out of ${SF} ${SN} Skins ${SE}**`
                 }
 
                 await DBprofile.subtract(`TC_${OpenUserID}`,1,{target: `.containers`})
                 await DBprofile.add(`TC_${OpenUserID}`,score,{target: `.score`})
+                A = await DBserver.add(`TC_${OpenGuildID}_${OpenUserID}`,score,{target: `.score`})
+                console.log(A)
+                Suser.OpenContainerCount++
                 text2 = `${PaintType}`
                 
                 UserIcon = message.author.displayAvatarURL
@@ -331,13 +357,13 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
                 DURATION = ENDTIME - NOWTIME
                 DurationToOpen = `${DURATION/1000} ms`
 
-
                     let newEmbed = new Discord.RichEmbed()
                     .setAuthor(message.author.username + `'s container :`,UserIcon)
+                    .setImage(PaintURL)
                     .setColor(HexID)
                     .addField(text1,text3)
                     .setImage(PaintURL)
-                    .setFooter(text2 + ` -- ${DurationToOpen}`)
+                    .setFooter(text2 + `  +${score} XP`)
 
                     if(PrestigeCheck === true)
                     {
@@ -349,6 +375,17 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
                         .setImage(PaintURL)
                         .setFooter(text2 + ` -- ${DurationToOpen}`)
 
+                        message.channel.send(newEmbed1)
+                    }
+                    else if(OpenGiftCheckAction === false)
+                    {
+                        let newEmbed1 = new Discord.RichEmbed()
+                        .setAuthor(message.author.username + ` Container`,UserIcon)
+                        .setColor(HexID)
+                        .addField(`:star: You Have Recieved Gift :star:`,`Type \`${Prefix.prefix}gift inbox\` to view your gifts`)
+                        .addField(text1,text3)
+                        .setImage(PaintURL)
+                        .setFooter(text2 + `  +${score} XP`)
                         message.channel.send(newEmbed1)
                     }
                     else

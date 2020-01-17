@@ -7,7 +7,7 @@ const spams = require("../spams.js");
 const db = require("quick.db");
 const fs = require("fs");
 
-module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle) => {
+module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle,DBguildSetting,DBgift,DBserver) => {
 
     //if(message.author.id != '292675388180791297') return
     if(message.author.id != '292675388180791297')

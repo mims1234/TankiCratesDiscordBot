@@ -3,58 +3,25 @@ const matchSorter = require("match-sorter")
 const Prefix = require("../prefix.json");
 const Discord = require("discord.js");
 const spams = require("../spams.js");
-const db = require("quick.db");
-const fs = require("fs");
 
 
-module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle) => {
+module.exports = async (bot,message,args,DBprofile,DBserver) => {
 
-    // if(message.author.id != '292675388180791297')
-    // {
-    //     if(message.author.id != '443649136881827850') return
-    // }
-
-    LeaderboardUserID = message.author.id
+    LeaderboardServerUserID = message.author.id
+    LeaderboardServerID = message.guild.id
     let prefix = Prefix.prefix;
 
-    const CrystalsSet = new Set();
-    const SuppliesSet = new Set();
-    const PaintsSet = new Set();
     const ScoreSet = new Set();
-    const CommonSet = new Set();
-    const UncommonSet = new Set();
-    const RareSet = new Set();
-    const EpicSet = new Set();
-    const LegendarySet = new Set();
-    const ExoticSet = new Set();
-    const PrestigeSet = new Set();
-    const PrestigeRankSet = new Set();
 
-    messageArray = message.content.split(' ')
     code = 'scores'
-    // code = messageArray[1]
-    // if(!code) return message.channel.send(`**Please Mention which Leaderboard to Display **\n\`Scores | Levels | Crystals | Supplies\`\n**Usage :** \`${prefix}top <type-name>\`\n**Example :** \`${prefix}top Crystals\``);
-    // code = code.toLowerCase()
-    // code1 = messageArray[2]
 
-    let Suser = message.author
-    let spaminterval =5
-        if (Suser.LeaderBoardSpam) {
-            if (new Date().getTime() - Suser.LeaderBoardSpam < spaminterval*1000) {
-                spams(message,Suser.LeaderBoardSpam,spaminterval)
-                return;
-            }
-            else { Suser.LeaderBoardSpam = new Date().getTime()}
-        }
-        else { Suser.LeaderBoardSpam = new Date().getTime()}
-
-    let profile = await DBprofile.fetch(`TC_${LeaderboardUserID}`,{target : '.username'}) 
+    let profile = await DBprofile.fetch(`TC_${LeaderboardServerUserID}`,{target : '.username'}) 
     if(!profile) return message.channel.send(`**Use \`${prefix}start\` to make a New Profile**`)
     switch (code) {
         case 'scores':     
                         score = [],temp = [],Name = [],z=0,sl=1;
                         rank = -1
-                        await DBprofile.startsWith(`TC`,{target :`.data`}).then(resp => {
+                        await DBserver.startsWith(`TC_${LeaderboardServerID}`,{target :`.data`}).then(resp => {
                             for(var i in resp)
                             {
                                 if(resp[i].data.score >=0)
@@ -62,7 +29,7 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
                                     if(resp[i].ID === 'TC_undefined') 
                                     {
                                         message.channel.send('Updating Ranking .. Try the command Again').then(m=>m.delete(7000))
-                                        DBprofile.delete('TC_undefined')
+                                        DBserver.delete('TC_undefined')
                                     }      
                                     Name[z] = resp[i].data.id
                                     score[z] = resp[i].data.score
@@ -78,7 +45,7 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
                                     }
                                 }
                             }
-                        A = '🏆 | Top 10 Most Scores\n-----------------------------------------------\n'
+                        A = '🏆 | Server Scores Leaderboard\n-----------------------------------------------\n'
                         for(i=(score.length-1);i>=0;i--)
                         {
                             for(var j in temp)
@@ -109,12 +76,12 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
                         if(rank > 0)
                         {
                             ValueFormater = numberFormatter("#,##0.##", temp[save]);
-                            B= B +'<Your Rank <'+rank+'> \t\t\t<Score = '+ValueFormater+'>```'; 
+                            B= B +'<Your Rank <'+rank+'> \t\t\t<Score = '+ValueFormater+'>```\`⫸ Scores collected since 10th Jan 2020 ⫷\`'; 
                         }
-                        else B = B + '```';
+                        else B = B + '```\n\`⫸ Command Added 10th Jan 2020 ⫷\`';
                         message.channel.send(B);
         break;
-        //default:        return message.channel.send(`**Please Mention which Leaderboard to Display **\n\`Scores | Levels | Crystals | Supplies\`\n**Usage :** \`${prefix}top <type-name>\`\n**Example :** \`${prefix}top Crystals\``);
+        default:        return message.channel.send(`**Please Mention which Leaderboard to Display **\n\`Scores | Crystals | Supplies\`\n**Usage :** \`${prefix}top global <type-name>\`\n**Example :** \`${prefix}top global Scores\``);
     }
 
     function swap(arr, first_Index, second_Index){
@@ -123,8 +90,4 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
     arr[second_Index] = temp;
     }
 
-}
-module.exports.help = {
-    name : "top",
-    desc : "Leaderboards"
 }

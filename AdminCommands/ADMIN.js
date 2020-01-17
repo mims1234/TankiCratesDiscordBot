@@ -7,7 +7,7 @@ const db = require("quick.db");
 const fs = require("fs");
 
 
-module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle) => {
+module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle,DBguildSetting,DBgift,DBserver) => {
 
     if(message.author.id != '292675388180791297') return
 
@@ -50,16 +50,6 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
                         await DBprofile.subtract(`TC_${UserID}`,Value,{target:`.crystals`})
                         message.channel.send(`${Value} crystals removed from ${UserName} profile`)
             break;    
-        case "SUCRY":   Val = await DBprofile.fetch(`TC_${UserID}`,{target:`.crystals`})
-                        if(Value >Val) return message.channel.send('Does not have that many crystals')
-                        await DBprofile.subtract(`TC_${UserID}`,Value,{target:`.crystals`})
-                        message.channel.send(`${Value} crystals removed from ${UserName} profile`)
-            break; 
-        case "SUCRY":   Val = await DBprofile.fetch(`TC_${UserID}`,{target:`.crystals`})
-                        if(Value >Val) return message.channel.send('Does not have that many crystals')
-                        await DBprofile.subtract(`TC_${UserID}`,Value,{target:`.crystals`})
-                        message.channel.send(`${Value} crystals removed from ${UserName} profile`)
-            break; 
     }
 }
 module.exports.help = {

@@ -10,26 +10,22 @@ module.exports = async (bot,message,args,P,PrestigeLevel) => {
     
     let Suser = message.author
     let spaminterval =0.5
-        if (Suser.PrestigeCheck) {
-            if (new Date().getTime() - Suser.PrestigeCheck < spaminterval*1000) {
-                //spams(message,Suser.PrestigeCheck,spaminterval)
-                return;
-            }
-            else { Suser.PrestigeCheck = new Date().getTime()}
+    if (Suser.PrestigeCheck) {
+        if (new Date().getTime() - Suser.PrestigeCheck < spaminterval*1000) {
+            //spams(message,Suser.PrestigeCheck,spaminterval)
+            return;
         }
         else { Suser.PrestigeCheck = new Date().getTime()}
+    }
+    else { Suser.PrestigeCheck = new Date().getTime()}
 
     let prestigeData = JSON.parse(fs.readFileSync("DataBase/Prestige.json","utf8"));
-    let textfile = JSON.parse(fs.readFileSync("TextFolder/TextFile.json","utf8"));
-    let container = JSON.parse(fs.readFileSync("DataBase/DB_ContainerDrops.json","utf8"));
-    let paintName = JSON.parse(fs.readFileSync("DataBase/DB_PaintName.json","utf8"));
     let paints = JSON.parse(fs.readFileSync("DataBase/DB_PaintID.json","utf8"));
         
     PrestigeUserName = message.author.username
     PrestigeUserID = message.author.id
     PrestigeUserIcon = message.author.displayAvatarURL
     console.log(`Prestige POP UP for ${PrestigeUserName}`)
-    //P = 'prestige0'
 
     if(P === `prestige0`) return
     if(P === `prestige1`) textReward = `\n[3] Cooldown Decreased by -1 Second`

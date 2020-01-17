@@ -6,25 +6,26 @@ const spams = require("../spams.js");
 const db = require("quick.db");
 const fs = require("fs");
 
-module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle) => {
+module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DBlevel,DBrole,DBidle,DBguildSetting,DBgift,DBserver) => {
     
     //if(message.author.id != '292675388180791297') return
     BuyUserID = message.author.id
     BuyNameID = message.author.username
+    BuyUserIcon = message.member.user.avatarURL
 
     let textfile = JSON.parse(fs.readFileSync("TextFolder/TextFile.json","utf8"));
     let prefix = Prefix.prefix;
 
-    messageArray = message.content.split(' ');
+    messageArray = message.content.split(' ')
     Cont = messageArray[1]
     try{
         Cont =parseInt(Cont)
     } catch(e)
     {
         console.log(e)
-        return message.channel.send(`**Use \`${prefix}buy\` <number of containers>**`)
+        return message.channel.send(`:information_source: | **INFORMATION**\n**Make sure you mention number of containers after ${prefix}buy ** \n:ballot_box_with_check: | ***Usage :*** \`${prefix}buy <number-of-containers>\` \n:white_check_mark: |  ***Example :*** \`${prefix}buy 5\``)
     }
-    if(!Cont || Cont<1) return message.channel.send(`**Use \`${prefix}buy\` <number of containers>**`)
+    if(!Cont || Cont<1) return message.channel.send(`:information_source: | **INFORMATION**\n**Make sure you mention number of containers after ${prefix}buy ** \n:ballot_box_with_check: | ***Usage :*** \`${prefix}buy <number-of-containers>\` \n:white_check_mark: |  ***Example :*** \`${prefix}buy 5\``)
 
     let Suser = message.author
     let spaminterval = 10
@@ -46,11 +47,19 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
 
     CRYE = emoji('661474074618363905') // Crystals
     CONE = emoji('661473896591130625') // Container
+    USEREMOTE = emoji(`476438415848505357`) //User
 
-    bot.confirmation = async (UserCry, message, question, limit = 30000) => {
+    bot.confirmation = async (UserCry, message, Q1,Q2, limit = 30000) => {
     const filter = m => m.author.id === message.author.id;
-    await message.channel.send(`**Shop Menu\n${BuyNameID} Crystals = `+UserCry+' '+CRYE+' **\n```md\n'+question+'```\n**Type `y` or `yes` to confirm your transaction**');
-        try {
+    BUYEMBED = new Discord.RichEmbed()
+    .setThumbnail(`https://i.imgur.com/KFDpqiM.jpg`)
+    .setAuthor(BuyNameID+` Purchase`,BuyUserIcon)
+    .setTitle(`Your Crystals = **${UserCry}** ${CRYE}`)
+    .addField(`${Q1}`,`${Q2}`)
+    .setFooter(`Type \"yes\" to confirm your transaction`)
+    .setColor(`#FE0000`)
+    await message.channel.send(BUYEMBED)
+    try {
         const collected = await message.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] });
         return collected.first().content;
         } catch (e) {
@@ -66,11 +75,20 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
     if(Cont > 1) grammer = `Containers`
     else grammer = `Container`
 
-    Q = `#Confirmation-Message:\n====================\nDo you want to buy ${Cont} ${grammer} for ${CrystalsFormat} Crystals ?`
+    Q1 = `Confirmation-Message:`
+    Q2 = `***Do you want to buy ${Cont} ${CONE} for ${CrystalsFormat} ${CRYE} ?***`
+
+    let LOWBAL = new Discord.RichEmbed()
+    .setAuthor(BuyNameID+` Crystals`,BuyUserIcon)
+    .setDescription(`**You do not have sufficient amount of Crystals**`)
+    .addField(`Balance:`,`***${UserCry}*** ${CRYE}`)
+    .setColor(`#FE0000`)
+    .setThumbnail(`https://s.eu.tankionline.com/0/16722/365/320/26561564032213/image.webp`)
+    .setFooter(`${prefix}open to earn more Crystals`)
     
-    if(UserCryA<Cost) return message.channel.send(`**You do not have sufficient amount of Crystals ${CRYE} **`)
+    if(UserCryA<Cost) return message.channel.send(LOWBAL)
     
-    confirm = await bot.confirmation(UserCry,message, Q)
+    confirm = await bot.confirmation(UserCry,message, Q1,Q2)
     if(confirm === false) return message.channel.send(textfile['QPaintWiki'].NoEntry)
     confirm = confirm.toLowerCase()
 
@@ -86,29 +104,9 @@ module.exports.run = async (bot,message,args,DBprofile,DBstats,DBachievements,DB
         return message.channel.send(`\`❌\`**Transaction Canceled**\`❌\``)
     }
 
-    function AddDiscout(total, percentage)
-    {
-        total = total - (total * (percentage/100))
-        total = Math.round(total)
-        return total
-    }
-
-    function Discounted(total, totalF ,percentage) {
-        CrystalsFormat = numberFormatter("#,##0.##", total)
-        OCrystalsFormat = numberFormatter("#,##0.##", totalF)
-        return `<—❌${CrystalsFormat}❌ = ✅${OCrystalsFormat}✅ = ${percentage}% Discount—>`
-    }
-
-    function Normal(total) {
-        total = Math.round(total)
-        CrystalsFormat = numberFormatter("#,##0.##", total)
-        return `<—✅${CrystalsFormat}✅—>`
-    }
-
-
 }
 module.exports.help = {
     name : "buy",
     desc : "Purchase containers",
     aliases: "b"
-}  
+}

@@ -11,22 +11,21 @@ module.exports = async (bot,message,args,DBprofile,DBstats,DBachievements,DBleve
     
     let Suser = message.author
     let spaminterval =2
-        if (Suser.LevelCheck) {
-            if (new Date().getTime() - Suser.LevelCheck < spaminterval*1000) {
-                //spams(message,Suser.LevelCheck,spaminterval)
-                return;
-            }
-            else { Suser.LevelCheck = new Date().getTime()}
+    if (Suser.LevelCheck) {
+        if (new Date().getTime() - Suser.LevelCheck < spaminterval*1000) {
+            //spams(message,Suser.LevelCheck,spaminterval)
+            return;
         }
         else { Suser.LevelCheck = new Date().getTime()}
-        
+    }
+    else { Suser.LevelCheck = new Date().getTime()}
+    Suser.LevelMessage = message
     LevelUserName = message.author.username
     LevelUserIDs = message.author.id
     let SCORE = await DBprofile.fetch(`TC_${LevelUserIDs}`,{target: `.score`})
     let LEVEL = await DBlevel.fetch(`TC_${LevelUserIDs}`,{target: `.level`}) + 1
     let VAL = LEVEL * LEVEL * 5;
-    let CRY = VAL * 10;
-    //console.log(SCORE+' '+LEVEL+' '+VAL)
+    let CRY = VAL * 5;
     if(SCORE > VAL)
     {
         await DBlevel.add(`TC_${LevelUserIDs}`,1,{target: `.level`})
@@ -41,7 +40,7 @@ module.exports = async (bot,message,args,DBprofile,DBstats,DBachievements,DBleve
 
         setTimeout(function(){
             spaminterval = 5;
-            message.channel.send(LEVELEMBED)
+            Suser.LevelMessage.channel.send(LEVELEMBED)
         }, 2000);
     }
 

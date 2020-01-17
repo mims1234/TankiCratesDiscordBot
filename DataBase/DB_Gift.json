@@ -1,0 +1,42 @@
+{
+  "20GIFT001":{
+    "id":"20GIFT001",
+    "name":"Bro",
+    "alt_name":"Bro",
+    "url":"https://en.tankiwiki.com/images/en/7/7f/Bro%21.png",
+    "emoji":"664466129758060554",
+    "cost":50000
+  },
+  "20GIFT002":{
+    "id":"20GIFT002",
+    "name":"Teddy Bear",
+    "alt_name":"Teddy_Bear",
+    "url":"https://en.tankiwiki.com/images/en/c/ce/Teddy_Bear.png",
+    "emoji":"664466129728569400",
+    "cost":500000
+  },
+  "20GIFT003":{
+    "id":"20GIFT003",
+    "name":"Happy Birthday",
+    "alt_name":"HappyBirthday",
+    "url":"https://en.tankiwiki.com/images/en/2/2b/HappyBirthday.png",
+    "emoji":"664466130265702410",
+    "cost":1000000
+  },
+  "20GIFT004":{
+    "id":"20GIFT004",
+    "name":"Golden Wrench",
+    "alt_name":"Golden_Wrench",
+    "url":"https://en.tankiwiki.com/images/en/5/59/Golden_Wrench.png",
+    "emoji":"664466130274091011",
+    "cost":2000000
+  },
+  "20GIFT005":{
+    "id":"20GIFT005",
+    "name":"Blue Sphere",
+    "alt_name":"Blue_Sphere",
+    "url":"https://en.tankiwiki.com/images/en/6/69/Blue_Sphere.png",
+    "emoji":"664466130655641613",
+    "cost":10000000
+  }
+}
