@@ -1,27 +1,29 @@
-Welcome to Glitch
-=================
+Discord TankiCrates Bot
+=======================
+This BOT was built as a personal project as a fan wiki for the game called Tanki Online
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
-
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
-
-Find out more [about Glitch](https://glitch.com/about).
-
-
-Your Project
+Project Info
 ------------
 
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
+Discord.JS
+Quick.DB (Database based on sqlite3)
+Tankionline Rating (API)
 
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
+Discord Commands :
 
+xopen : Opens containers to give you a random item 
+xprofile : To check your stats
+xinventory : To check your inventory of collected items
+xtop <server | global> : Displays Leaderboard based on current server or global 
+xprestige : Displays your requirment for next prestige level
+xpaints : Displays a menu of all the collected paints
+xskins : Displays a menu of all collected skins
+xdaily : Daily rewards
+xweekly : Weekly rewards
 
-Made by [Glitch](https://glitch.com/)
--------------------
+Version 1.14
 
-\ ゜o゜)ノ
+-----------------------------
+Made by Mohammed Imran Mohsin
+-----------------------------
+
